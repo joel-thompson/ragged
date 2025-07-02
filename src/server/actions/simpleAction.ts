@@ -1,27 +1,11 @@
 "use server";
+import { anthropic } from "@ai-sdk/anthropic";
+import { generateText } from "ai";
 
-/**
- * Server Actions allow you to run async server functions directly from your components.
- * They provide a secure way to mutate data or perform server operations without
- * creating API endpoints. The "use server" directive at the top of this file
- * marks all exports as server actions.
- *
- * @example
- * // In a client component:
- * import { simpleAction } from "~/server/actions/simpleAction";
- *
- * // Using with onClick
- * const handleClick = async () => {
- *   const result = await simpleAction("Hello from client component");
- *   console.log(result);
- *   // Handle result...
- * };
- *
- * return (
- *   <button onClick={handleClick}>Process Data</button>
- * );
- */
+const model = anthropic("claude-3-5-haiku-latest");
+
 export async function simpleAction(input: string): Promise<{
+  userInput?: string;
   success: boolean;
   message: string;
   timestamp?: string;
@@ -34,10 +18,15 @@ export async function simpleAction(input: string): Promise<{
     };
   }
 
-  // Process data (this is just a mock response)
+  const { text } = await generateText({
+    model,
+    prompt: `What is the capital of France?`,
+  });
+
   return {
+    message: text,
+    userInput: input,
     success: true,
-    message: `Processed: ${input}`,
     timestamp: new Date().toISOString(),
   };
 }
