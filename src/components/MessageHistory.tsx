@@ -1,5 +1,6 @@
 "use client";
 
+import { MessageHistoryResponse } from "@/app/api/message-history/route";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { CoreMessage } from "ai";
@@ -31,10 +32,7 @@ export const MessageHistory = () => {
       { role: "user", content: "Hello, how are you?" },
     ];
     setMessages(newMessages);
-    const result = (await mutateAsync(newMessages)) as {
-      text: string;
-      messages: CoreMessage[];
-    };
+    const result = (await mutateAsync(newMessages)) as MessageHistoryResponse;
     setCompletion(result.text);
     setMessages((prev) => [...prev, ...result.messages]);
   };

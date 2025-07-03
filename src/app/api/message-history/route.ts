@@ -1,8 +1,15 @@
 import { anthropic } from "@ai-sdk/anthropic";
-import { generateText } from "ai";
+import { CoreMessage, generateText } from "ai";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export type MessageHistoryResponse = {
+  text: string;
+  messages: CoreMessage[];
+};
+
+export async function POST(
+  req: Request
+): Promise<NextResponse<MessageHistoryResponse>> {
   const { messages } = await req.json();
 
   const model = anthropic("claude-3-5-haiku-latest");
@@ -19,5 +26,8 @@ export async function POST(req: Request) {
 
   console.log(response.messages);
 
-  return NextResponse.json({ text, messages: response.messages });
+  return NextResponse.json({
+    text,
+    messages: response.messages,
+  });
 }
