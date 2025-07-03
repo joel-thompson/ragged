@@ -4,6 +4,7 @@ import { BasicStreamComplete } from "@/components/BasicStreamComplete";
 import { MessageHistory } from "@/components/MessageHistory";
 import { StructuredOutput } from "@/components/StructuredOutput";
 import { StructuredOutputStream } from "@/components/StructuredOutputStream";
+import { Classify } from "@/components/Classify";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold p-8">
         Some buttons to test out the different features
       </h1>
+      <Classify />
       <StructuredOutputStream />
       <StructuredOutput />
       <MessageHistory />
