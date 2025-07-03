@@ -62,44 +62,9 @@ export const StructuredOutputStream = () => {
 
       {objectOutput && (
         <div className="mt-2 p-4 bg-gray-100 rounded text-sm w-full max-w-2xl">
-          <h3 className="font-semibold mb-2">Streaming Recipe:</h3>
-          <div className="space-y-2">
-            {objectOutput.name && (
-              <div>
-                <strong>Name:</strong> {objectOutput.name}
-              </div>
-            )}
-            {objectOutput.ingredients &&
-              objectOutput.ingredients.length > 0 && (
-                <div>
-                  <strong>Ingredients:</strong>
-                  <ul className="list-disc pl-5 mt-1">
-                    {objectOutput.ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            {objectOutput.steps && objectOutput.steps.length > 0 && (
-              <div>
-                <strong>Steps:</strong>
-                <ol className="list-decimal pl-5 mt-1">
-                  {objectOutput.steps.map((step, index) => (
-                    <li key={index}>{step}</li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </div>
-
-          <details className="mt-4">
-            <summary className="cursor-pointer text-sm text-gray-600">
-              Raw JSON
-            </summary>
-            <pre className="whitespace-pre-wrap overflow-x-auto text-xs mt-2 p-2 bg-gray-50 rounded">
-              {JSON.stringify(objectOutput, null, 2)}
-            </pre>
-          </details>
+          <pre className="whitespace-pre-wrap overflow-x-auto text-xs mt-2 p-2 bg-gray-50 rounded">
+            {JSON.stringify(objectOutput, null, 2)}
+          </pre>
         </div>
       )}
     </div>
