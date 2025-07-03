@@ -3,6 +3,7 @@
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { StructuredOutputResponse } from "@/app/api/structured-output-stream/route";
+import { streamJSON } from "@/lib/streamingLib";
 
 export const StructuredOutputStream = () => {
   const [objectOutput, setObjectOutput] =
@@ -14,41 +15,16 @@ export const StructuredOutputStream = () => {
     setObjectOutput(null);
 
     try {
-      const response = await fetch("/api/structured-output-stream", {
+      await streamJSON<StructuredOutputResponse>({
+        url: "/api/structured-output-stream",
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+        onData: (data) => {
+          setObjectOutput(data);
+        },
+        onError: (error) => {
+          console.error("Streaming error:", error);
         },
       });
-
-      if (!response.body) {
-        throw new Error("No response body");
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n");
-
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              setObjectOutput(data);
-            } catch (e) {
-              console.error("Failed to parse JSON:", e);
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Streaming error:", error);
     } finally {
       setIsStreaming(false);
     }

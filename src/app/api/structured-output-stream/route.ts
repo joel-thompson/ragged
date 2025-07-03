@@ -1,6 +1,7 @@
 import { anthropic } from "@ai-sdk/anthropic";
 import { streamObject } from "ai";
 import { z } from "zod";
+import { streamAIResponse } from "@/lib/streamingLib";
 
 export type StructuredOutputResponse = {
   name: string;
@@ -27,26 +28,5 @@ export async function POST() {
       .describe("A recipe with name, ingredients, and steps"),
   });
 
-  // Create a readable stream that sends partial objects
-  const stream = new ReadableStream({
-    async start(controller) {
-      try {
-        for await (const partialObject of result.partialObjectStream) {
-          const chunk = `data: ${JSON.stringify(partialObject)}\n\n`;
-          controller.enqueue(new TextEncoder().encode(chunk));
-        }
-        controller.close();
-      } catch (error) {
-        controller.error(error);
-      }
-    },
-  });
-
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-    },
-  });
+  return streamAIResponse({ streamResult: result });
 }
