@@ -18,7 +18,7 @@ export async function simpleAction(input: string): Promise<{
     };
   }
 
-  const { text, textStream } = streamText({
+  const { textStream, text } = streamText({
     model,
     prompt: `What is the capital of France?`,
   });

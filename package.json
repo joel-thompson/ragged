@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.12",
+    "@ai-sdk/react": "^1.2.12",
     "@clerk/nextjs": "^6.19.2",
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-slot": "^1.2.2",
