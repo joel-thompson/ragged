@@ -50,12 +50,14 @@ export const MessageHistory = () => {
           </div>
         </>
       )}
-      <div className="mt-2 p-2 bg-gray-100 rounded text-sm">
-        <div className="font-semibold mb-2">Messages:</div>
-        <pre className="whitespace-pre-wrap overflow-x-auto text-xs">
-          {JSON.stringify(messages, null, 2)}
-        </pre>
-      </div>
+      {messages.length > 0 && (
+        <div className="mt-2 p-2 bg-gray-100 rounded text-sm">
+          <div className="font-semibold mb-2">Messages:</div>
+          <pre className="whitespace-pre-wrap overflow-x-auto text-xs">
+            {JSON.stringify(messages, null, 2)}
+          </pre>
+        </div>
+      )}
     </div>
   );
 };
