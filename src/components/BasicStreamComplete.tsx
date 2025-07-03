@@ -9,7 +9,7 @@ export const BasicStreamComplete = () => {
   });
 
   const handleClick = () => {
-    complete("Hello, please tell me a short joke!");
+    complete("I like beans very much, I also like potatoes");
   };
 
   return (

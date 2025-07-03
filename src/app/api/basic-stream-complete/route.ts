@@ -7,9 +7,14 @@ export async function POST(req: Request) {
 
   const model = anthropic("claude-3-5-haiku-latest");
 
+  // System prompt for a text summarizer
+  const system =
+    "You are an expert text summarizer. Given any text, provide a clear, concise summary that captures the main points and key details, using simple language.";
+
   const result = streamText({
     model,
-    prompt: prompt, // Use the prompt from the request
+    system,
+    prompt,
   });
 
   console.log("streaming started");
